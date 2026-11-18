@@ -1,0 +1,23 @@
+# Archivos generados por Xcode
+*.xcuserstate
+xcuserdata/
+DerivedData/
+build/
+.build/
+*.ipa
+*.app
+*.dSYM
+
+# Proyecto generado por XcodeGen
+*.xcodeproj/
+*.xcworkspace/
+
+# Archivos temporales de macOS
+.DS_Store
+.AppleDouble
+
+# Archivos de VS Code
+.vscode/
+
+# Capturas generadas automáticamente
+screenshots/

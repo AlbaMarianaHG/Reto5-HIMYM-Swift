@@ -1,0 +1,33 @@
+name: HIMYMQuiz
+
+options:
+  bundleIdPrefix: com.uveg.himym
+  deploymentTarget:
+    iOS: "16.0"
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    IPHONEOS_DEPLOYMENT_TARGET: "16.0"
+
+targets:
+  HIMYMQuiz:
+    type: application
+    platform: iOS
+
+    sources:
+      - path: HIMYMQuiz
+
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.uveg.himym.quiz
+        PRODUCT_NAME: HIMYMQuiz
+        GENERATE_INFOPLIST_FILE: YES
+        TARGETED_DEVICE_FAMILY: "1"
+        CODE_SIGNING_ALLOWED: NO
+        ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: NO
+
+        INFOPLIST_KEY_CFBundleDisplayName: "HIMYM Quiz"
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone:
+          - UIInterfaceOrientationPortrait
