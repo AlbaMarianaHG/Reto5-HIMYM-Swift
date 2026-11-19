@@ -2,9 +2,6 @@ import XCTest
 
 final class HIMYMQuizUITests: XCTestCase {
 
-    // Respuestas para obtener cada uno de los cinco personajes.
-    // Cada número representa una opción de respuesta.
-
     let characterAnswers: [[Int]] = [
         [0, 4, 0, 2, 0], // Ted
         [1, 0, 1, 1, 1], // Marshall
@@ -25,7 +22,7 @@ final class HIMYMQuizUITests: XCTestCase {
         continueAfterFailure = false
     }
 
-    // MARK: - Capturas de pantalla
+    // MARK: - Screenshot function
 
     func takeScreenshot(
         app: XCUIApplication,
@@ -41,7 +38,7 @@ final class HIMYMQuizUITests: XCTestCase {
         add(attachment)
     }
 
-    // MARK: - Recorrido completo del cuestionario
+    // MARK: - Complete quiz
 
     func playQuiz(
         app: XCUIApplication,
@@ -58,7 +55,6 @@ final class HIMYMQuizUITests: XCTestCase {
             startButton.waitForExistence(timeout: 10)
         )
 
-        // Captura de bienvenida
         if captureQuestions {
             takeScreenshot(
                 app: app,
@@ -68,7 +64,6 @@ final class HIMYMQuizUITests: XCTestCase {
 
         startButton.tap()
 
-        // Recorrer las cinco preguntas
         for question in 0..<5 {
 
             let questionLabel = app.staticTexts[
@@ -79,7 +74,6 @@ final class HIMYMQuizUITests: XCTestCase {
                 questionLabel.waitForExistence(timeout: 10)
             )
 
-            // Capturar cada pregunta
             if captureQuestions {
                 takeScreenshot(
                     app: app,
@@ -87,7 +81,6 @@ final class HIMYMQuizUITests: XCTestCase {
                 )
             }
 
-            // Seleccionar una respuesta
             let option = app.buttons[
                 "answer_\(answers[question])"
             ]
@@ -98,7 +91,6 @@ final class HIMYMQuizUITests: XCTestCase {
 
             option.tap()
 
-            // Comprobar que el botón siguiente está habilitado
             let nextButton = app.buttons["next_button"]
 
             XCTAssertTrue(nextButton.isEnabled)
@@ -106,7 +98,7 @@ final class HIMYMQuizUITests: XCTestCase {
             nextButton.tap()
         }
 
-        // Comprobar el resultado
+        // Verify character result
         let result = app.staticTexts["result_character"]
 
         XCTAssertTrue(
@@ -118,25 +110,27 @@ final class HIMYMQuizUITests: XCTestCase {
             resultName
         )
 
-        // Capturar el personaje obtenido
+        // Create a simple screenshot name
+        let safeResultName = resultName.replacingOccurrences(
+            of: " ",
+            with: "-"
+        )
+
         takeScreenshot(
             app: app,
-            name: "Result-\(resultName.replacingOccurrences(
-                of: " ",
-                with: "-"
-            ))"
+            name: "Result-\(safeResultName)"
         )
 
         app.terminate()
     }
 
-    // MARK: - Prueba de los cinco personajes
+    // MARK: - Test all five characters
 
     func testCompleteQuizAndCaptureAllScreens() {
 
         let app = XCUIApplication()
 
-        // Primer recorrido: Ted y capturas de las preguntas.
+        // Ted: capture welcome and all five questions
         playQuiz(
             app: app,
             answers: characterAnswers[0],
@@ -144,7 +138,7 @@ final class HIMYMQuizUITests: XCTestCase {
             resultName: characterNames[0]
         )
 
-        // Recorridos restantes: Marshall, Lily, Barney y Robin.
+        // Marshall, Lily, Barney and Robin
         for index in 1..<characterAnswers.count {
 
             playQuiz(
