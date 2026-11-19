@@ -6,9 +6,11 @@ struct ContentView: View {
     private let navy = Color(
         red: 0.07, green: 0.13, blue: 0.25
     )
+
     private let yellow = Color(
         red: 1.0, green: 0.78, blue: 0.20
     )
+
     private let cream = Color(
         red: 0.98, green: 0.97, blue: 0.94
     )
@@ -21,6 +23,7 @@ struct ContentView: View {
     @State private var isFinished = false
     @State private var result: Character = .ted
 
+    // MARK: - Vista principal
     var body: some View {
         ZStack {
             cream
@@ -85,6 +88,7 @@ struct ContentView: View {
                 .foregroundColor(navy)
                 .cornerRadius(16)
             }
+            .accessibilityIdentifier("start_button")
             .padding(.horizontal, 30)
 
             Text("It's going to be legendary!")
@@ -123,6 +127,7 @@ struct ContentView: View {
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 18) {
+
                     Text("PREGUNTA \(currentQuestion + 1)")
                         .font(.system(size: 13, weight: .bold))
                         .tracking(2)
@@ -163,6 +168,7 @@ struct ContentView: View {
                 .cornerRadius(15)
             }
             .disabled(selectedOption == nil)
+            .accessibilityIdentifier("next_button")
         }
         .padding(24)
     }
@@ -178,9 +184,10 @@ struct ContentView: View {
             selectedOption = option.id
         } label: {
             HStack(spacing: 12) {
-                Text(String(
-                    UnicodeScalar(65 + option.id)!
-                ))
+
+                Text(
+                    String(UnicodeScalar(65 + option.id)!)
+                )
                 .font(.system(size: 15, weight: .bold))
                 .frame(width: 35, height: 35)
                 .background(
@@ -217,12 +224,14 @@ struct ContentView: View {
             )
         }
         .buttonStyle(.plain)
+        .accessibilityIdentifier("answer_\(option.id)")
     }
 
     // MARK: - Pantalla de resultados
     private var resultView: some View {
         ScrollView {
             VStack(spacing: 24) {
+
                 Text("☂️")
                     .font(.system(size: 65))
 
@@ -242,6 +251,7 @@ struct ContentView: View {
                     .font(.system(size: 34, weight: .black))
                     .multilineTextAlignment(.center)
                     .foregroundColor(navy)
+                    .accessibilityIdentifier("result_character")
 
                 Rectangle()
                     .fill(yellow)
@@ -273,6 +283,7 @@ struct ContentView: View {
                     .foregroundColor(navy)
                     .cornerRadius(16)
                 }
+                .accessibilityIdentifier("restart_button")
                 .padding(.top, 10)
             }
             .frame(maxWidth: .infinity)
@@ -291,6 +302,7 @@ struct ContentView: View {
     }
 
     private func nextQuestion() {
+
         guard selectedOption != nil else {
             return
         }
@@ -312,6 +324,7 @@ struct ContentView: View {
             result = QuizData.calculateResult(
                 answers: answers
             )
+
             isFinished = true
         }
     }

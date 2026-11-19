@@ -11,6 +11,7 @@ settings:
     IPHONEOS_DEPLOYMENT_TARGET: "16.0"
 
 targets:
+
   HIMYMQuiz:
     type: application
     platform: iOS
@@ -25,9 +26,36 @@ targets:
         GENERATE_INFOPLIST_FILE: YES
         TARGETED_DEVICE_FAMILY: "1"
         CODE_SIGNING_ALLOWED: NO
-        ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: NO
-
         INFOPLIST_KEY_CFBundleDisplayName: "HIMYM Quiz"
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
         INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone:
           - UIInterfaceOrientationPortrait
+
+  HIMYMQuizUITests:
+    type: bundle.ui-testing
+    platform: iOS
+
+    sources:
+      - path: HIMYMQuizUITests
+
+    dependencies:
+      - target: HIMYMQuiz
+
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.uveg.himym.quiz.UITests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: HIMYMQuiz
+        CODE_SIGNING_ALLOWED: NO
+
+schemes:
+  HIMYMQuiz:
+    build:
+      targets:
+        HIMYMQuiz: all
+        HIMYMQuizUITests: [test]
+
+    test:
+      config: Debug
+      targets:
+        - HIMYMQuizUITests
